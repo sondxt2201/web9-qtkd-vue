@@ -1,0 +1,117 @@
+@import url("../style/components/icon.css");
+@import url("../style/components/button.css");
+@import url("../style/components/input.css");
+@import url("../style/components/combobox.css");
+@import url("../style/components/table.css");
+@import url("../style/components/loading.css");
+@import url("../style//components/dialog.css");
+@import url("../style/components/toastmessage.css");
+@import url("../style/components/formEmployee.css");
+@import url("../style/layout/header.css");
+@import url("../style/layout/mainpage.css");
+@import url("../style/layout/sidebar.css");
+
+
+@font-face {
+    font-family: notosans;
+    src: url("../assets/fonts/notosans-regular.2cb88a13.woff2");
+}
+
+@media screen and (min-width: 2477px) {
+    .main-page-footer {
+        position: absolute;
+        bottom: 0px;
+        width: calc(100% - 18px);
+        height: 48px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 16px;
+        background-color: #fff;
+        z-index: 2;
+    }
+
+    .table-anchor-right {
+        border-left: none;
+    }
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes fadein {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-button {
+    display: none;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #b8bcc3;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+html {
+    font-size: 13px;
+    line-height: 1.6rem;
+    font-family: notosans;
+    box-sizing: border-box;
+    font-weight: 400;
+    width: 100%;
+    overflow: hidden;
+}
+
+body {
+    box-sizing: border-box;
+    font-family: notosans;
+    font-size: 14px;
+    margin: 0;
+    /* min-width: 1024px; */
+    background: #f4f5f8;
+    color: #111111;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: 200px calc(100% - 200px);
+    grid-template-rows: 56px calc(100vh - 56px);
+    height: auto;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.main-app {
+    position: absolute;
+}
+
+.flex {
+    display: flex;
+}

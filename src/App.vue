@@ -1,26 +1,37 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div class="grid-container">
+    <TheHeader />
+    <TheSidebar />
+    <TheMainPage />
+  </div>
+  <TheDialog />
+  <TheToast />
+  <TheLoading />
 </template>
 
+<style>
+@import url("./style/main.css");
+</style>
+
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import TheHeader from "./components/layout/TheHeader.vue";
+import TheSidebar from "./components/layout/TheSidebar.vue";
+import TheMainPage from "./components/layout/TheMainPage.vue";
+import TheDialog from "./components/dialog/TheDialog.vue";
+import TheToast from "./components/toast/TheToast.vue";
+import TheLoading from "./components/loading/TheLoading.vue";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    HelloWorld
-  }
-}
+    TheHeader,
+    TheSidebar,
+    TheMainPage,
+    TheDialog,
+    TheToast,
+    TheLoading
+  },
+};
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
+
