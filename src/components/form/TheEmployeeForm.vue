@@ -16,7 +16,10 @@
 
         <div class="container-header--right">
           <div class="mi-form-icon-help mi-icon mi-icon-big"></div>
-          <btnEsc @click="onClose" />
+          <div
+            class="mi-form-icon-escape mi-icon mi-icon-big"
+            @click="onClose"
+          ></div>
         </div>
       </div>
 
@@ -63,24 +66,20 @@
                   <span class="form-message">*</span>
                 </div>
                 <select
-                  name=""
+                  name="department"
                   id="department"
-                  v-model="department.DepartmentName"
+                  v-model="formData.DepartmentId"
                   class="form-control-department input"
                 >
-                  <option value="">Chọn đơn vị</option>
-                  <option v-for="(item, index) in department" :key="index">
+                  <option value="">-- Chọn đơn vị --</option>
+                  <option
+                    v-for="(item, index) in department"
+                    :key="index"
+                    v-bind:value="item.DepartmentId"
+                  >
                     {{ item.DepartmentName }}
                   </option>
                 </select>
-                <!-- <input
-                  v-model="formData.departmentName"
-                  type="text"
-                  name="name"
-                  id="txtDepartment"
-                  class="form-control-department input"
-                />
-                <button class="mi-icon mi-form-icon-dropdown"></button> -->
               </div>
 
               <div class="form-group flex no-left">
@@ -127,6 +126,7 @@
                       name="gender"
                       id="radio-option-male"
                       class="male"
+                      v-bind:value="1"
                     />
                     <div class="check"></div>
                     <label for="radio-option-male" class="male">Nam</label>
@@ -138,11 +138,13 @@
                       name="gender"
                       id="radio-option-female"
                       class="female"
+                      v-bind:value="0"
                     />
                     <div class="check"></div>
                     <label for="radio-option-female" class="female">Nữ</label>
                   </li>
                 </ul>
+                <!-- <div>checked: {{formData.gender}}</div> -->
               </div>
             </div>
 
@@ -292,10 +294,18 @@
       </div>
 
       <div class="container-footer">
-        <btnCancel @click="onClose" />
+        <btnCommon
+          :classBtn="'cancel button btnEsc'"
+          :text="'Huỷ'"
+          @click="onClose"
+        />
         <div class="add-employee flex">
-          <btnAddTB />
-          <btnAddDB @click="handleClick" />
+          <btnCommon :classBtn="'add-to-table button'" :text="'Cất'" />
+          <btnCommon
+            :classBtn="'add-to-database button'"
+            :text="'Cất và thêm'"
+            @click="handleClick"
+          />
         </div>
       </div>
     </div>
@@ -306,143 +316,42 @@
 @import url("../form/TheEmployeeForm.vue");
 </style>
 <script>
-import axios from "axios";
-import { reactive } from "vue";
-import btnAddDB from "../control/btnAddDB.vue";
-import btnAddTB from "../control/btnAddTB.vue";
-import btnEsc from "../control/btnEscapeForm.vue";
-import btnCancel from "../control/btnCancelForm.vue";
+// import axios from "axios";
+import btnCommon from "@/components/control/btnCommon.vue";
+import { getData, postData } from "@/utils/axios-common";
 
 export default {
   name: "TheEmployeeForm",
   props: ["onClose"],
   components: {
-    btnAddDB,
-    btnAddTB,
-    btnEsc,
-    btnCancel,
+    btnCommon,
   },
   data() {
     return {
-      department: [],
+      department: {},
+      formData: {},
+      employeeURL: "https://amis.manhnv.net/api/v1/Employees",
+      departmentURL: "https://amis.manhnv.net/api/v1/Departments",
     };
   },
 
-  // methods: {
-  //   // getAPI(urlAPI, getted){
-  //   //   try {
-  //   //     axios
-  //   //     .get(urlAPI)
-  //   //     .then((response) => {
-  //   //       console.log(getted);
-  //   //       getted = response.data;
-  //   //     })
-  //   //     .catch((error) => {
-  //   //       console.log(error);
-  //   //     });
-  //   //   } catch (error) {
-  //   //     console.log(error.toJSOn());
-  //   //   }
-  //   // }
-  // },
+  methods: {
+    // Gửi dữ liệu lên Database khi nha
+    handleClick() {
+      console.log("formData: ", this.formData);
+      postData(this.employeeURL, this.formData);
+    },
 
-  created() {
-    // Get thông tin Department
-    // this.getAPI("https://amis.manhnv.net/api/v1/Departments", this.department)
-
-    var me = this;
-    try {
-      axios
-        .get("https://amis.manhnv.net/api/v1/Departments")
-        .then((response) => {
-          console.log("department:", response.data);
-          me.department = response.data;
-        })
-        .catch((e) => {
-          console.log(e);
-        });
-    } catch (e) {
-      console.log(e.toJSOn());
-    }
+    // Gọi hàm getData để lấy dữ liệu department
+    getData,
+    // Gán dữ liệu về Department cho combobox trong form
+    setData() {
+      this.getData(this.departmentURL).then((res) => (this.department = res));
+    },
   },
-
-  setup() {
-    // onMounted(() => {
-    //   console.log("mounted");
-    // });
-
-    const formData = reactive({
-      createdDate: "",
-      createdBy: "",
-      modifiedDate: "",
-      modifiedBy: "",
-      employeeId: "0a96ae3d-55f3-11ed-949c-00163e06abee",
-      employeeCode: "",
-      firstName: "",
-      lastName: "",
-      employeeName: "",
-      gender: "",
-      dateOfBirth: "",
-      phoneNumber: "",
-      email: "",
-      address: "",
-      identityNumber: "",
-      identityDate: "",
-      identityPlace: "string",
-      joinDate: "",
-      martialStatus: 0,
-      educationalBackground: 0,
-      qualificationId: "",
-      departmentId: "469b3ece-744a-45d5-957d-e8c757976496",
-      positionId: "",
-      workStatus: 0,
-      personalTaxCode: "string",
-      salary: 0,
-      telephoneNumber: "string",
-      bankAccountNumber: "string",
-      bankName: "string",
-      bankBranchName: "string",
-      bankProvinceName: "string",
-      employeePosition: "string",
-      positionCode: "string",
-      positionName: "string",
-      departmentCode: "string",
-      departmentName: "string",
-      qualificationName: "string",
-    });
-
-    function handleClick() {
-      console.log("formData: ", formData);
-
-      //Post thông tin nhân viên
-      try {
-        axios
-          .post("https://amis.manhnv.net/api/v1/Employees", formData)
-          .then((response) => {
-            console.log(response);
-          })
-          .catch((e) => {
-            console.log(e);
-          });
-      } catch (e) {
-        console.log(e);
-      }
-
-      // Post thông tin Department
-      // try {
-      //   axios
-      //     .post("https://amis.manhnv.net/api/v1/Departments", formData)
-      //     .then((response) => {
-      //       console.log("Department:",response);
-      //     })
-      //     .catch((e) => {
-      //       console.log(e);
-      //     });
-      // } catch (e) {
-      //   console.log(e);
-      // }
-    }
-    return { formData, handleClick };
+  mounted() {
+    // Get thông tin Department và gán cho combobox trong fomr
+    this.setData();
   },
 };
 </script>

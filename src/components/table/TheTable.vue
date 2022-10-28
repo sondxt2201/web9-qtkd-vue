@@ -79,10 +79,7 @@
       <!-- table body -->
       <tbody>
         <tr v-for="employee in employees" :key="employee.EmployeeId">
-          <td
-            data-type="EmployeeCode"
-            class="text-align--center no_padding column-tiny-width"
-          >
+          <td class="text-align--center no_padding column-tiny-width">
             <input type="checkbox" />
           </td>
           <td class="text-align--left column-medium-width">
@@ -95,7 +92,7 @@
             {{ employee.GenderName }}
           </td>
           <td class="text-align--center no_padding column-medium-width">
-            {{ formatDate(employee.DateOfBirth) || "" }}
+            {{ formatDate(employee.DateOfBirth) }}
           </td>
           <td class="text-align--left column-big-width">
             {{ employee.IdentityNumber || "" }}
@@ -145,74 +142,27 @@
     </table>
   </div>
 </template>
+<script >
+import { formatDate } from "./table";
+import { getData } from "@/utils/axios-common";
 
-<script>
-import axios from "axios";
 export default {
   name: "TheTable",
   data() {
     return {
       employees: [],
-      department: [],
+      url: "https://amis.manhnv.net/api/v1/Employees",
+      formatDate,
     };
   },
   methods: {
-    formatDate(dob) {
-      try {
-        if (dob) {
-          dob = new Date(dob);
-          //Lấy ra ngày
-          let date = dob.getDate();
-          // Lấy ra tháng
-          let month = dob.getMonth() + 1;
-          // Lấy ra năm
-          let year = dob.getFullYear();
-          // Trả về giá trị là ngày/tháng/năm
-          dob = `${date} / ${month} / ${year}`;
-          // employee.DateOfBirth = dob;
-        } else {
-          dob = "";
-        }
-      } catch (error) {
-        console.log(error);
-      }
+    getData,
+    setData() {
+      this.getData(this.url).then((res) => (this.employees = res));
     },
-
-    // getAPI(urlAPI, getted){
-    //   try {
-    //     axios
-    //     .get(urlAPI)
-    //       .then((response) => {
-    //       console.log(response.data);
-    //       getted = response.data;
-    //     })
-    //     .catch((error) => {
-    //       console.log(error);
-    //     });
-    //   } catch (error) {
-    //     console.log(error.toJSOn());
-    //   }
-    // }
   },
   mounted() {
-    
-    // lấy dữ liệu khi component được tạo thành công
-    // this.getAPI('https://amis.manhnv.net/api/v1/Employees', this.employees)
-
-    var me = this;
-    try {
-      axios
-        .get("https://amis.manhnv.net/api/v1/Employees")
-        .then((response) => {
-          console.log(response.data);
-          me.employees = response.data;
-        })
-        .catch((e) => {
-          console.log(e);
-        });
-    } catch (e) {
-      console.log(e.toJSOn());
-    }
+    this.setData();
   },
 };
 </script>

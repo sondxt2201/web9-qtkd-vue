@@ -25,9 +25,7 @@
         />
 
         <button class="mi-icon mi-icon-medium mi-toolbar-icon-search"></button>
-        <button
-          class="mi-icon mi-icon-big mi-toolbar-icon-refresh"
-        ></button>
+        <button class="mi-icon mi-icon-big mi-toolbar-icon-refresh"></button>
       </div>
       <!--  -->
 
@@ -95,20 +93,14 @@ export default {
     TheTable,
     TheEmployeeForm,
   },
+
   setup() {
     const formVisiable = ref(false);
     const addEmployeeBtn = () => {
       formVisiable.value = !formVisiable.value;
     };
 
-    // const loadingVisiable = ref(true);
-    // function addTable() {
-    //   setTimeout(() => {
-    //     console.log(loadingVisiable);
-    //     loadingVisiable.value = !loadingVisiable.value;
-    //   }, 100);
-    // }
-    return {formVisiable, addEmployeeBtn};
+    return { formVisiable, addEmployeeBtn };
   },
 };
 </script>
