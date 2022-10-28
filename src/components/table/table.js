@@ -19,15 +19,4 @@ function formatDate(dob) {
   }
 }
 
-// function getData(url) {
-//   return axios
-//     .get(url)
-//     .then((response) => {
-//       return response.data;
-//     })
-//     .catch((e) => {
-//       console.log(e);
-//     });
-// }
-
 export { formatDate };
