@@ -353,5 +353,6 @@ export default {
     // Get thông tin Department và gán cho combobox trong fomr
     this.setData();
   },
+  watch() {},
 };
 </script>

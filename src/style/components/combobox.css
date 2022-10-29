@@ -85,7 +85,9 @@
     /* background-color: red; */
 }
 
-
+.paging-combobox-title {
+    padding-right: 12px;
+}
 
 .combobox-list li:first-child {
     /* padding-top: 8px; */

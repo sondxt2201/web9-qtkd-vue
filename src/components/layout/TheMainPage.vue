@@ -30,7 +30,7 @@
       <!--  -->
 
       <!-- table -->
-      <TheTable> </TheTable>
+      <TheTable :employees="data.res?.Data" :loading="data.loading" />
       <!--  -->
 
       <!-- main-page-content -->
@@ -39,69 +39,46 @@
     <!--  -->
     <!--  -->
     <!-- footer -->
-    <div class="main-page-footer">
-      <div class="footer-left">Tổng:<b style="font-size: 16px"> 20</b></div>
-      <div class="footer-right footer-paging">
-        <div class="paging-combobox combobox">
-          <span class="paging-combobox-title">Số bản ghi/trang</span>
-          <input type="text" class="paging-combobox-input" />
-          <div class="footer-combobox-dropdown">
-            <div class="mi-icon mi-icon-small mi-footer-icon-dropdown"></div>
-            <div class="footer-combobox-dropdown-option combobox">
-              <ul class="footer-option-list combobox-list">
-                <li class="10-row">10</li>
-                <li class="20-row">20</li>
-                <li class="30-row">30</li>
-                <li class="50-row">50</li>
-                <li class="100-row">100</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <div class="paging-navigation">
-          <span class="paging-navigation-title">
-            <b style="color: #000; font-size: 16px">1</b> -
-            <b style="color: #000; font-size: 16px">9</b> bản ghi</span
-          >
-          <button
-            class="
-              mi-icon mi-icon-big
-              paging-navigation-button
-              pre-page
-              disabled
-            "
-          ></button>
-          <button
-            class="mi-icon mi-icon-big paging-navigation-button next-page"
-          ></button>
-        </div>
-      </div>
-    </div>
+    <ThePagination
+      :setFilter="setFilter"
+      :total="data.res?.TotalRecord"
+      :totalPage="data.res?.TotalPage"
+      :filters="filters"
+    />
   </div>
   <TheEmployeeForm :onClose="addEmployeeBtn" v-show="formVisiable" />
 </template>
 
-<script>
+<script setup>
 import TheTable from "../table/TheTable.vue";
 import TheEmployeeForm from "../form/TheEmployeeForm.vue";
+import ThePagination from "../paging/ThePagination.vue";
+import { onMounted, reactive, ref, watch } from "vue";
+import { getEmployees } from "@/utils/axios-common";
 
-import { ref } from "vue";
+// defineProps(["loading"]);
+const formVisiable = ref(false);
 
-export default {
-  name: "TheMainPage",
-  components: {
-    TheTable,
-    TheEmployeeForm,
-  },
-
-  setup() {
-    const formVisiable = ref(false);
-    const addEmployeeBtn = () => {
-      formVisiable.value = !formVisiable.value;
-    };
-
-    return { formVisiable, addEmployeeBtn };
-  },
+const addEmployeeBtn = () => {
+  formVisiable.value = !formVisiable.value;
 };
+
+const data = reactive({
+  loading: false,
+  res: undefined,
+});
+
+const filters = reactive({});
+
+const setFilter = (set) => set(filters);
+
+onMounted(() => {
+  filters.pageNumber = 1;
+  filters.pageSize = 10;
+});
+
+watch(filters, () => {
+  getEmployees.call(data, filters);
+});
 </script>
 

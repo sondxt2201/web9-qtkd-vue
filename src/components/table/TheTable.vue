@@ -77,7 +77,11 @@
       <!--  -->
 
       <!-- table body -->
-      <tbody>
+      <div v-if="loading">
+        <TheLoading />
+        loading......
+      </div>
+      <tbody v-if="!loading">
         <tr v-for="employee in employees" :key="employee.EmployeeId">
           <td class="text-align--center no_padding column-tiny-width">
             <input type="checkbox" />
@@ -143,26 +147,16 @@
   </div>
 </template>
 <script >
+import TheLoading from "../loading/TheLoading.vue";
 import { formatDate } from "./table";
-import { getData } from "@/utils/axios-common";
-
 export default {
   name: "TheTable",
-  data() {
-    return {
-      employees: [],
-      url: "https://amis.manhnv.net/api/v1/Employees",
-      formatDate,
-    };
+  props: ["employees", "loading"],
+  components: {
+    TheLoading,
   },
   methods: {
-    getData,
-    setData() {
-      this.getData(this.url).then((res) => (this.employees = res));
-    },
-  },
-  mounted() {
-    this.setData();
+    formatDate,
   },
 };
 </script>

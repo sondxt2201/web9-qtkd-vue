@@ -7,9 +7,7 @@
 </template>
 
 <script>
-
 export default {
-  props: ["addTable"],
-  name: 'TheLoading',
-}
+  name: "TheLoading",
+};
 </script>

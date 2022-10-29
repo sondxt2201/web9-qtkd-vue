@@ -6,7 +6,6 @@
   </div>
   <TheDialog />
   <TheToast />
-  <TheLoading />
 </template>
 
 <style>
@@ -19,7 +18,6 @@ import TheSidebar from "./components/layout/TheSidebar.vue";
 import TheMainPage from "./components/layout/TheMainPage.vue";
 import TheDialog from "./components/dialog/TheDialog.vue";
 import TheToast from "./components/toast/TheToast.vue";
-import TheLoading from "./components/loading/TheLoading.vue";
 
 export default {
   name: "App",
@@ -29,7 +27,6 @@ export default {
     TheMainPage,
     TheDialog,
     TheToast,
-    TheLoading
   },
 };
 </script>
