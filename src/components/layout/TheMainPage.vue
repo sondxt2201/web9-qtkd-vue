@@ -80,5 +80,7 @@ onMounted(() => {
 watch(filters, () => {
   getEmployees.call(data, filters);
 });
+
+// deleteData()
 </script>
 

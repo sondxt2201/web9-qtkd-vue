@@ -8,7 +8,11 @@
     <div class="footer-right footer-paging">
       <div class="paging-combobox combobox">
         <div class="paging-combobox-title">Số bản ghi/trang</div>
-        <select v-bind:value="filters.pageSize" @change="handleClick">
+        <select
+          v-bind:value="filters.pageSize"
+          @change="handleClick"
+          class="paging-combobox-input"
+        >
           <option value="10">10</option>
           <option value="20">20</option>
           <option value="30">30</option>

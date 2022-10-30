@@ -35,7 +35,7 @@
                   <span class="form-message">*</span>
                 </div>
                 <input
-                  v-model="formData.employeeCode"
+                  v-model="formData.EmployeeCode"
                   type="text"
                   name="name"
                   id="txtEmployeeCode"
@@ -49,7 +49,7 @@
                   <span class="form-message">*</span>
                 </div>
                 <input
-                  v-model="formData.employeeName"
+                  v-model="formData.EmployeeName"
                   type="text"
                   name="name"
                   id="txtFullName"
@@ -87,7 +87,7 @@
                   >Chức danh</label
                 >
                 <input
-                  v-model="formData.positionName"
+                  v-model="formData.PositionName"
                   type="text"
                   name="name"
                   id=""
@@ -104,7 +104,7 @@
 
                 <div class="datepicker-wrapper">
                   <input
-                    v-model="formData.dateOfBirth"
+                    v-model="formData.DateOfBirth"
                     type="text"
                     placeholder="Ngày/Tháng/Năm"
                     class="form-control-employee input born-date"
@@ -121,7 +121,7 @@
                 <ul class="gender-select flex">
                   <li class="gender-option flex">
                     <input
-                      v-model="formData.gender"
+                      v-model="formData.Gender"
                       type="radio"
                       name="gender"
                       id="radio-option-male"
@@ -152,7 +152,7 @@
               <div class="form-group-big flex no-left">
                 <label for="" class="form-label idNumber"> Số CMND </label>
                 <input
-                  v-model="formData.identityNumber"
+                  v-model="formData.IdentityNumber"
                   type="text"
                   name="name"
                   id="txtIDNumber"
@@ -166,7 +166,7 @@
                 >
                 <div class="datepicker-wrapper">
                   <input
-                    v-model="formData.identityDate"
+                    v-model="formData.IdentityDate"
                     type="text"
                     placeholder="Ngày/Tháng/Năm"
                     class="form-control-employee input born-date"
@@ -181,7 +181,7 @@
                 >Nơi cấp</label
               >
               <input
-                v-model="formData.identityPlace"
+                v-model="formData.IdentityPlace"
                 type="text"
                 name="name"
                 id=""
@@ -196,7 +196,7 @@
             <div class="form-group-large flex">
               <label for="address" class="form-label address">Địa chỉ</label>
               <input
-                v-model="formData.address"
+                v-model="formData.Address"
                 type="text"
                 name="name"
                 id=""
@@ -212,7 +212,7 @@
                   >ĐT di động</label
                 >
                 <input
-                  v-model="formData.telephoneNumber"
+                  v-model="formData.TelephoneNumber"
                   type="text"
                   name="name"
                   id="txtPhoneNumber"
@@ -224,7 +224,7 @@
               <div class="form-group-medium flex">
                 <label for="phone" class="form-label phone">ĐT cố định</label>
                 <input
-                  v-model="formData.phoneNumber"
+                  v-model="formData.PhoneNumber"
                   type="text"
                   name="name"
                   id=""
@@ -236,7 +236,7 @@
               <div class="form-group-medium flex">
                 <label for="email" class="form-label email">Email</label>
                 <input
-                  v-model="formData.email"
+                  v-model="formData.Email"
                   type="text"
                   name="name"
                   id="txtEmail"
@@ -252,7 +252,7 @@
                   >Tài khoản ngân hàng</label
                 >
                 <input
-                  v-model="formData.bankAccountNumber"
+                  v-model="formData.BankAccountNumber"
                   type="text"
                   name="name"
                   id=""
@@ -266,7 +266,7 @@
                   >Tên ngân hàng</label
                 >
                 <input
-                  v-model="formData.bankName"
+                  v-model="formData.BankName"
                   type="text"
                   name="name"
                   id=""
@@ -280,7 +280,7 @@
                   >Chi nhánh</label
                 >
                 <input
-                  v-model="formData.bankBranchName"
+                  v-model="formData.BankBranchName"
                   type="text"
                   name="name"
                   id=""
@@ -322,7 +322,7 @@ import { getData, postData } from "@/utils/axios-common";
 
 export default {
   name: "TheEmployeeForm",
-  props: ["onClose"],
+  props: ["onClose", "client"],
   components: {
     btnCommon,
   },
@@ -336,23 +336,23 @@ export default {
   },
 
   methods: {
-    // Gửi dữ liệu lên Database khi nha
-    handleClick() {
-      console.log("formData: ", this.formData);
-      postData(this.employeeURL, this.formData);
-    },
-
     // Gọi hàm getData để lấy dữ liệu department
     getData,
     // Gán dữ liệu về Department cho combobox trong form
     setData() {
       this.getData(this.departmentURL).then((res) => (this.department = res));
     },
+
+    // Gửi dữ liệu lên Database
+    handleClick() {
+      postData(this.employeeURL, this.formData);
+      console.log("formData: ", this.formData);
+      // location.reload();
+    },
   },
   mounted() {
-    // Get thông tin Department và gán cho combobox trong fomr
+    // Get thông tin Department và gán cho combobox trong form
     this.setData();
   },
-  watch() {},
 };
 </script>

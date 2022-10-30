@@ -23,7 +23,6 @@ function getEmployees(filters) {
 }
 
 // Thực hiện GET API
-
 function getData(url) {
   return axios
     .get(url)
@@ -39,10 +38,13 @@ function postData(url, dat) {
     .post(url, dat)
     .then((response) => {
       console.log(response);
+      location.reload();
     })
     .catch((e) => {
       console.log(e);
     });
 }
+
+// Thực hiện DELETE API
 
 export { getData, postData, getEmployees };

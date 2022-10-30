@@ -79,7 +79,7 @@
       <!-- table body -->
       <div v-if="loading">
         <TheLoading />
-        loading......
+        loading...
       </div>
       <tbody v-if="!loading">
         <tr v-for="employee in employees" :key="employee.EmployeeId">
@@ -131,11 +131,16 @@
                   class="mi-icon mi-icon-small mi-table-icon-dropdown"
                 ></button>
                 <div class="table-combobox-dropdown-option">
-                  <ul class="table-option-list">
-                    <li class="duplicate-option">Nhân bản</li>
-                    <li class="delete-option">Xoá</li>
-                    <li class="disable-option">Ngưng sử dụng</li>
-                  </ul>
+                  <div class="table-option-list">
+                    <button class="duplicate-option button">Nhân bản</button>
+                    <button
+                      class="delete-option button"
+                      @click="deleteData(employee.EmployeeId)"
+                    >
+                      Xoá
+                    </button>
+                    <button class="disable-option button">Ngưng sử dụng</button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -147,16 +152,28 @@
   </div>
 </template>
 <script >
+import axios from "axios";
 import TheLoading from "../loading/TheLoading.vue";
 import { formatDate } from "./table";
+import { getData } from "@/utils/axios-common";
 export default {
   name: "TheTable",
   props: ["employees", "loading"],
   components: {
     TheLoading,
   },
+  data() {
+    return {
+      employeeURL: "https://amis.manhnv.net/api/v1/Employees",
+    };
+  },
   methods: {
     formatDate,
+    deleteData(id) {
+      axios.delete(this.employeeURL + "/" + id).then(() => {
+        location.reload();
+      });
+    },
   },
 };
 </script>
